@@ -159,10 +159,12 @@ document.querySelector("#calendar-button").addEventListener("click", () => {
 
 document.querySelector("#share-button").addEventListener("click", async () => {
   const status = document.querySelector("#share-status");
+  const shareUrl = new URL(window.location.href);
+  shareUrl.searchParams.set("share", "2");
   const shareData = {
     title: "Shubham & Pratiksha — Wedding Invitation",
     text: "Join us for Haldi at the groom’s home on 19 December from 6:00 PM, and our wedding on 20 December 2026 at 2:35 PM.",
-    url: window.location.href,
+    url: shareUrl.href,
   };
 
   if (navigator.share) {
@@ -178,7 +180,7 @@ document.querySelector("#share-button").addEventListener("click", async () => {
   }
 
   try {
-    await navigator.clipboard.writeText(window.location.href);
+    await navigator.clipboard.writeText(shareUrl.href);
     status.textContent = "Invitation link copied. Share it with your loved ones.";
   } catch {
     status.textContent = "Copy the invitation link from your browser’s address bar to share it.";
