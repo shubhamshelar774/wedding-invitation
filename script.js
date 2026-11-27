@@ -128,6 +128,14 @@ document.querySelector("#calendar-button").addEventListener("click", () => {
     "VERSION:2.0",
     "PRODID:-//Shubham and Pratiksha//Wedding Invitation//EN",
     "BEGIN:VEVENT",
+    "UID:shubham-pratiksha-haldi-20261219",
+    `DTSTAMP:${timestamp}`,
+    "DTSTART:20261219T123000Z",
+    "SUMMARY:Haldi Celebration at the Groom's Home",
+    "LOCATION:Groom's home",
+    "DESCRIPTION:Join the Haldi celebration from 6:00 PM onwards on Saturday\\, 19 December 2026.",
+    "END:VEVENT",
+    "BEGIN:VEVENT",
     "UID:shubham-pratiksha-wedding-20261220",
     `DTSTAMP:${timestamp}`,
     "DTSTART:20261220T090500Z",
@@ -153,7 +161,7 @@ document.querySelector("#share-button").addEventListener("click", async () => {
   const status = document.querySelector("#share-status");
   const shareData = {
     title: "Shubham & Pratiksha — Wedding Invitation",
-    text: "Join us to celebrate Shubham and Pratiksha on 20 December 2026 at 2:35 PM.",
+    text: "Join us for Haldi at the groom’s home on 19 December from 6:00 PM, and our wedding on 20 December 2026 at 2:35 PM.",
     url: window.location.href,
   };
 

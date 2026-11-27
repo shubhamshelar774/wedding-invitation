@@ -10,4 +10,4 @@ Open `index.html` in a browser. No build step or dependencies are required.
 
 The site is configured for `https://shubhamshelar774.github.io/wedding-invitation/`. In repository **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, and save. Push later updates to `main` to redeploy.
 
-The countdown, calendar file, and venue details are set to 20 December 2026 at 2:35 PM India Standard Time.
+The calendar includes the Haldi at the groom's home on 19 December 2026 from 6:00 PM and the wedding at Sankalp Garden Mangal Karyalaya on 20 December 2026 at 2:35 PM India Standard Time.

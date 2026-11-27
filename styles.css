@@ -814,6 +814,10 @@ body.invitation-open .scroll-cue { animation-delay: 960ms; }
   background: rgb(255 250 249 / 75%);
 }
 
+.venue-card + .venue-card {
+  margin-top: 12px;
+}
+
 .venue-ornament {
   margin-bottom: 8px;
   color: var(--rose);
