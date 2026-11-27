@@ -1,6 +1,6 @@
 # Shubham & Pratiksha — Wedding Invitation
 
-A mobile-first, interactive wedding invitation built with plain HTML, CSS, and JavaScript. Guests open the envelope to reveal the wedding date, countdown, photos, and venue.
+A mobile-first, interactive wedding invitation built with plain HTML, CSS, and JavaScript. Guests open the envelope to reveal the couple's photo and names, then the wedding date, countdown, photos, and venue.
 
 ## Preview locally
 

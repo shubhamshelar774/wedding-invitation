@@ -64,7 +64,7 @@ document.querySelector("#open-invitation").addEventListener("click", () => {
 
   window.setTimeout(() => {
     entryScreen.hidden = true;
-    document.querySelector("#date-reveal").scrollIntoView({
+    document.querySelector("#names-reveal").scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
       block: "start",
     });
