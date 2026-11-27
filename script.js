@@ -160,10 +160,10 @@ document.querySelector("#calendar-button").addEventListener("click", () => {
 document.querySelector("#share-button").addEventListener("click", async () => {
   const status = document.querySelector("#share-status");
   const shareUrl = new URL(window.location.href);
-  shareUrl.searchParams.set("share", "2");
+  shareUrl.searchParams.set("share", "3");
   const shareData = {
     title: "Shubham & Pratiksha — Wedding Invitation",
-    text: "Join us for Haldi at the groom’s home on 19 December from 6:00 PM, and our wedding on 20 December 2026 at 2:35 PM.",
+    text: "We would love for you to celebrate with us. Open the invitation for all the details.",
     url: shareUrl.href,
   };
 
