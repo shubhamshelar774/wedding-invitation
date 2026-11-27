@@ -27,20 +27,97 @@ function updateCountdown() {
 updateCountdown();
 window.setInterval(updateCountdown, 1000);
 
-const revealSections = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
+function scatterPetals(container, count, className) {
+  const colors = ["#c8768a", "#db9cac", "#e7bbab", "#c5a16e"];
+  for (let index = 0; index < count; index += 1) {
+    const piece = document.createElement("span");
+    piece.className = className;
+    piece.style.setProperty("--left", `${Math.random() * 100}%`);
+    piece.style.setProperty("--size", `${6 + Math.random() * 8}px`);
+    piece.style.setProperty("--angle", `${Math.random() * 360}deg`);
+    piece.style.setProperty("--drift", `${Math.random() * 160 - 80}px`);
+    piece.style.setProperty("--petal-color", colors[index % colors.length]);
+    piece.style.setProperty("--delay", `${Math.random() * -12}s`);
+    piece.style.setProperty("--duration", `${9 + Math.random() * 9}s`);
+    container.append(piece);
+  }
+}
+
+scatterPetals(document.querySelector("#entry-petals"), 18, "entry-petal");
+
+document.querySelector("#open-invitation").addEventListener("click", () => {
+  const entryScreen = document.querySelector("#entry-screen");
+  const invitation = document.querySelector("#invitation");
+  entryScreen.classList.add("is-opening");
+  entryScreen.setAttribute("aria-hidden", "true");
+  invitation.removeAttribute("aria-hidden");
+  invitation.inert = false;
+  document.body.classList.add("invitation-open");
+
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    scatterPetals(document.querySelector("#date-confetti"), 36, "confetti-piece");
+    document.querySelectorAll(".confetti-piece").forEach((piece, index) => {
+      piece.style.setProperty("--delay", `${Math.random() * 0.9}s`);
+      piece.style.animation = `confetti-fall ${2.8 + Math.random() * 1.8}s ${index * 0.018}s ease-in forwards`;
+    });
+  }
+
+  window.setTimeout(() => {
+    entryScreen.hidden = true;
+    document.querySelector("#date-reveal").scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+      block: "start",
+    });
+  }, 900);
+});
+
+const memoryTrack = document.querySelector("#memory-track");
+const memoryCards = [...memoryTrack.querySelectorAll(".memory-card")];
+const carouselDots = [...document.querySelectorAll(".carousel-dot")];
+
+function setCurrentMemory(index) {
+  const card = memoryCards[index];
+  if (!card) return;
+  memoryTrack.scrollTo({ left: card.offsetLeft - memoryTrack.offsetLeft, behavior: "smooth" });
+}
+
+document.querySelector("#previous-memory").addEventListener("click", () => {
+  const current = carouselDots.findIndex((dot) => dot.classList.contains("is-current"));
+  setCurrentMemory(Math.max(0, current - 1));
+});
+
+document.querySelector("#next-memory").addEventListener("click", () => {
+  const current = carouselDots.findIndex((dot) => dot.classList.contains("is-current"));
+  setCurrentMemory(Math.min(memoryCards.length - 1, current + 1));
+});
+
+carouselDots.forEach((dot, index) => {
+  dot.addEventListener("click", () => setCurrentMemory(index));
+});
+
+let scrollFrame = 0;
+memoryTrack.addEventListener("scroll", () => {
+  if (scrollFrame) return;
+  scrollFrame = window.requestAnimationFrame(() => {
+    const center = memoryTrack.scrollLeft + memoryTrack.clientWidth / 2;
+    const currentIndex = memoryCards.reduce((closest, card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2 - memoryTrack.offsetLeft;
+      const closestCenter = memoryCards[closest].offsetLeft + memoryCards[closest].clientWidth / 2 - memoryTrack.offsetLeft;
+      return Math.abs(cardCenter - center) < Math.abs(closestCenter - center) ? index : closest;
+    }, 0);
+
+    carouselDots.forEach((dot, index) => {
+      const isCurrent = index === currentIndex;
+      dot.classList.toggle("is-current", isCurrent);
+      if (isCurrent) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
       }
     });
-  }, { threshold: 0.12 });
-  revealSections.forEach((section) => revealObserver.observe(section));
-} else {
-  revealSections.forEach((section) => section.classList.add("is-visible"));
-}
+    scrollFrame = 0;
+  });
+});
 
 document.querySelector("#calendar-button").addEventListener("click", () => {
   const timestamp = new Date().toISOString()
